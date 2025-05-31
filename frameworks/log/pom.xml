@@ -3,21 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <groupId>com.hhu</groupId>
-        <artifactId>intelligent-teaching-system</artifactId>
+        <groupId>cn.edu.hhu</groupId>
+        <artifactId>frameworks</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>cn.edu.hhu</groupId>
-    <artifactId>frameworks</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>common</module>
-        <module>log</module>
-        <module>cache</module>
-        <module>web</module>
-    </modules>
+    <artifactId>its-log-spring-boot-starter</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>

@@ -1,0 +1,29 @@
+package cn.edu.hhu.spring.boot.starter.common.utils;
+
+import cn.edu.hhu.spring.boot.starter.common.enums.BaseErrorCode;
+import cn.edu.hhu.spring.boot.starter.common.exception.AbstractException;
+import cn.edu.hhu.spring.boot.starter.common.result.Result;
+import java.lang.Void;
+import java.util.Optional;
+
+public class ResultUtil {
+    public static <T>Result<T> success(T data){
+        return new Result<T>().setCode("200").setData(data);
+    }
+    public static Result<?> success(){
+        return new Result<>().setCode("200");
+    }
+    public static Result<Void> fail(String message,String code){
+        return new Result<Void>().setCode(code).setMessage(message);
+    }
+    public static Result<Void> fail(BaseErrorCode errorCode){
+        return new Result<Void>().setCode(errorCode.getCode()).setMessage(errorCode.getMessage());
+    }
+    public static Result<Void> fail(AbstractException exception){
+        return new Result<Void>().setCode(Optional.ofNullable(exception.getErrorCode()).orElse(BaseErrorCode.SERVICE_ERROR.getCode()))
+                .setMessage(Optional.ofNullable(exception.getMessage()).orElse(exception.getMessage()));
+    }
+    public static Result<Void> fail(){
+        return new Result<Void>().setCode(BaseErrorCode.SERVICE_ERROR.getCode()).setMessage(BaseErrorCode.SERVICE_ERROR.getMessage());
+    }
+}

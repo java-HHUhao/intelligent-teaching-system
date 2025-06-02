@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public class ResultUtil {
     public static <T>Result<T> success(T data){
-        return new Result<T>().setCode("200").setData(data);
+        return new Result<T>().setCode("0").setData(data);
     }
     public static Result<?> success(){
-        return new Result<>().setCode("200");
+        return new Result<>().setCode("0");
     }
     public static Result<Void> fail(String message,String code){
         return new Result<Void>().setCode(code).setMessage(message);

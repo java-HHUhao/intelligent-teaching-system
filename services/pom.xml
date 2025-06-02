@@ -4,12 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.hhu</groupId>
+        <groupId>cn.edu.hhu</groupId>
         <artifactId>intelligent-teaching-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <groupId>cn.edu.hhu</groupId>
     <artifactId>services</artifactId>
 
     <properties>

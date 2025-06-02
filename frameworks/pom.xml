@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hhu</groupId>
+        <groupId>cn.edu.hhu</groupId>
         <artifactId>intelligent-teaching-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>cn.edu.hhu</groupId>
     <artifactId>frameworks</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>common</module>
         <module>log</module>

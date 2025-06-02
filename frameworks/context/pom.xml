@@ -3,24 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>cn.edu.hhu</groupId>
-        <artifactId>intelligent-teaching-system</artifactId>
+        <artifactId>frameworks</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>frameworks</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>its-context-spring-boot-starter</artifactId>
 
-    <modules>
-        <module>common</module>
-        <module>log</module>
-        <module>cache</module>
-        <module>web</module>
-        <module>distributedid</module>
-        <module>designpattern</module>
-        <module>context</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>

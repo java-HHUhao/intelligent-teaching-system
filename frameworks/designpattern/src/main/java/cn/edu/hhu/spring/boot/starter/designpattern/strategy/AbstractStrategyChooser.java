@@ -2,7 +2,7 @@ package cn.edu.hhu.spring.boot.starter.designpattern.strategy;
 
 import cn.edu.hhu.spring.boot.starter.common.exception.ServerException;
 import cn.edu.hhu.spring.boot.starter.context.contextholder.ApplicationContextHolder;
-import org.springframework.context.ApplicationEvent;
+import cn.edu.hhu.spring.boot.starter.context.init.ApplicationInitializingEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.StringUtils;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class AbstractStrategyChooser implements ApplicationListener<ApplicationEvent> {
+public class AbstractStrategyChooser implements ApplicationListener<ApplicationInitializingEvent> {
     /**
      * 策略集合
      */
@@ -50,7 +50,7 @@ public class AbstractStrategyChooser implements ApplicationListener<ApplicationE
         return (RESPONSE) strategyExecutor.executeResp(request);
     }
     @Override
-    public void onApplicationEvent(ApplicationEvent event) {
+    public void onApplicationEvent(ApplicationInitializingEvent event) {
         Map<String,AbstractStrategyExecutor> actual= ApplicationContextHolder.getBeansOfType(AbstractStrategyExecutor.class);
         actual.forEach((beanName,executor)->{
             AbstractStrategyExecutor strategyExecutor=abstractStrategyExecutorMap.get(executor.mark());

@@ -9,8 +9,5 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>its-cache-spring-boot-starter</artifactId>
-
-
-
+    <artifactId>its-mq-spring-boot-starter</artifactId>
 </project>

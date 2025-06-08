@@ -21,6 +21,7 @@
         <module>distributedid</module>
         <module>designpattern</module>
         <module>context</module>
+        <module>mq</module>
     </modules>
 
 </project>

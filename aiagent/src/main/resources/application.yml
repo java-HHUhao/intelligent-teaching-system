@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: intelligent-teaching-system
+  ai:
+    dashscope:
+      api-key: sk-63c7588e037e4d7cbf0f3cd3ca03a10d
+      chat:
+        options:
+          model: qwen-plus
+        enabled: true
+server:
+  port: 8100
+  servlet:
+    context-path: /api
+    # springdoc
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+  paths-to-match: '/**'
+  packages-to-scan: cn.edu.hhu.aiagent.controller
+
+logging:
+  level:
+    root: info

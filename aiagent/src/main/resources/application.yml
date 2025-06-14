@@ -1,6 +1,8 @@
 spring:
   application:
     name: intelligent-teaching-system
+  config:
+    import: optional:models.yml
   ai:
     dashscope:
       api-key: sk-63c7588e037e4d7cbf0f3cd3ca03a10d
@@ -12,7 +14,7 @@ server:
   port: 8100
   servlet:
     context-path: /api
-    # springdoc
+    # springdoc 访问路径：http://localhost:8100/api/doc.html#/home
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -22,7 +24,7 @@ springdoc:
     path: /v3/api-docs
   group-configs:
   paths-to-match: '/**'
-  packages-to-scan: cn.edu.hhu.aiagent.controller
+  packages-to-scan: cn.edu.hhu.spring.boot.starter.aiagent.controller
 
 logging:
   level:

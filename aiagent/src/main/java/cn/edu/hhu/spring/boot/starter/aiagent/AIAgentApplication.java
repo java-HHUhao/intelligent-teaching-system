@@ -1,4 +1,4 @@
-package cn.edu.hhu.aiagent;
+package cn.edu.hhu.spring.boot.starter.aiagent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

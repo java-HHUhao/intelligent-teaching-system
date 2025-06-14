@@ -8,15 +8,26 @@
         <artifactId>intelligent-teaching-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>aiagent</artifactId>
+    <artifactId>its-aiagent-spring-boot-stater</artifactId>
 
     <dependencies>
-<!--        项目依赖-->
+        <!--        项目依赖-->
         <dependency>
             <groupId>cn.edu.hhu</groupId>
             <artifactId>its-log-spring-boot-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-designpattern-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-context-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--        spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -34,49 +45,49 @@
             <version>1.0.0-M6.1</version>
         </dependency>
         <!-- https://java2ai.com/docs/1.0.0-M6.1/models/ollama -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
+        <!--            <version>1.0.0-M6</version>-->
+        <!--        </dependency>-->
         <!-- LangChain4J DashScope -->
-<!--        <dependency>-->
-<!--            <groupId>dev.langchain4j</groupId>-->
-<!--            <artifactId>langchain4j-community-dashscope</artifactId>-->
-<!--            <version>1.0.0-beta2</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>dev.langchain4j</groupId>-->
+        <!--            <artifactId>langchain4j-community-dashscope</artifactId>-->
+        <!--            <version>1.0.0-beta2</version>-->
+        <!--        </dependency>-->
         <!-- 支持结构化输出 -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.victools</groupId>-->
-<!--            <artifactId>jsonschema-generator</artifactId>-->
-<!--            <version>4.38.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.victools</groupId>-->
+        <!--            <artifactId>jsonschema-generator</artifactId>-->
+        <!--            <version>4.38.0</version>-->
+        <!--        </dependency>-->
         <!-- 支持文件会话记忆持久化的序列化 -->
-<!--        <dependency>-->
-<!--            <groupId>com.esotericsoftware</groupId>-->
-<!--            <artifactId>kryo</artifactId>-->
-<!--            <version>5.6.2</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-markdown-document-reader</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.esotericsoftware</groupId>-->
+        <!--            <artifactId>kryo</artifactId>-->
+        <!--            <version>5.6.2</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-markdown-document-reader</artifactId>-->
+        <!--            <version>1.0.0-M6</version>-->
+        <!--        </dependency>-->
         <!-- 手动整合 PGVector 向量存储 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-pgvector-store</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.postgresql</groupId>-->
+        <!--            <artifactId>postgresql</artifactId>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-pgvector-store</artifactId>-->
+        <!--            <version>1.0.0-M6</version>-->
+        <!--        </dependency>-->
         <!-- 自动整合 PGVector 向量存储 -->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.ai</groupId>-->
@@ -84,25 +95,25 @@
         <!--            <version>1.0.0-M7</version>-->
         <!--        </dependency>-->
         <!-- Spring AI MCP Client -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-mcp-client-spring-boot-starter</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-mcp-client-spring-boot-starter</artifactId>-->
+        <!--            <version>1.0.0-M6</version>-->
+        <!--        </dependency>-->
         <!-- jsoup HTML 解析库 -->
-<!--        <dependency>-->
-<!--            <groupId>org.jsoup</groupId>-->
-<!--            <artifactId>jsoup</artifactId>-->
-<!--            <version>1.19.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jsoup</groupId>-->
+        <!--            <artifactId>jsoup</artifactId>-->
+        <!--            <version>1.19.1</version>-->
+        <!--        </dependency>-->
         <!-- PDF 生成库 -->
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-core -->
-<!--        <dependency>-->
-<!--            <groupId>com.itextpdf</groupId>-->
-<!--            <artifactId>itext-core</artifactId>-->
-<!--            <version>9.1.0</version>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.itextpdf</groupId>-->
+        <!--            <artifactId>itext-core</artifactId>-->
+        <!--            <version>9.1.0</version>-->
+        <!--            <type>pom</type>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/com.itextpdf/font-asian -->
         <dependency>
             <groupId>com.itextpdf</groupId>

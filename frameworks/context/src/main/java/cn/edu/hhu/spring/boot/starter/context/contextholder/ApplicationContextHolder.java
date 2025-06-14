@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class ApplicationContextHolder implements ApplicationContextAware {
     public static ApplicationContext CONTEXT;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         ApplicationContextHolder.CONTEXT = applicationContext;
     }
-
     /**
      * 按照类型获取bean
      */

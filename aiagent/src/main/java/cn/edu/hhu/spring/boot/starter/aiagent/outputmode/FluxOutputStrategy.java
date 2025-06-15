@@ -1,19 +1,18 @@
 package cn.edu.hhu.spring.boot.starter.aiagent.outputmode;
 
-import cn.edu.hhu.spring.boot.starter.context.contextholder.ApplicationContextHolder;
 import cn.edu.hhu.spring.boot.starter.designpattern.strategy.AbstractStrategyExecutor;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-@Component
-public class FluxOutputStrategy implements AbstractStrategyExecutor<String, Flux<String>> {
+import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
+import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
+
+
+public class FluxOutputStrategy implements AbstractStrategyExecutor<PromptPropertiesDTO,Flux<String>> {
     private final ChatClient chatClient;
 
-    public FluxOutputStrategy(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
+    public FluxOutputStrategy(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @Override
@@ -22,7 +21,11 @@ public class FluxOutputStrategy implements AbstractStrategyExecutor<String, Flux
     }
 
     @Override
-    public Flux<String> executeResp(String prompt) {
-        return chatClient.prompt().user(prompt).stream().content();
+    public Flux<String> executeResp(PromptPropertiesDTO promptPropertiesDTO) {
+        return chatClient.prompt()
+                .user(promptPropertiesDTO.getPrompt())
+                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY,promptPropertiesDTO.getChatId())
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, promptPropertiesDTO.getMemorySize()))
+                .stream().content();
     }
 }

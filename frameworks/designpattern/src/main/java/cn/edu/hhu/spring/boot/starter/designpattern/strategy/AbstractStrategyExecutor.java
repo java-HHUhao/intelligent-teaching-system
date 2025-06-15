@@ -1,6 +1,6 @@
 package cn.edu.hhu.spring.boot.starter.designpattern.strategy;
 
-public interface AbstractStrategyExecutor<REQUEST, RESPONSE> {
+public interface AbstractStrategyExecutor<REQUEST,RESPONSE> {
     /**
      * 策略标识
      *

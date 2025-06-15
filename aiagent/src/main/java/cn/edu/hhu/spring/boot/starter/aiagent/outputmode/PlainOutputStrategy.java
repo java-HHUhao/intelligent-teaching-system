@@ -8,12 +8,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
-@Component
-public class PlainOutputStrategy implements AbstractStrategyExecutor<String, Mono<String>> {
+
+public class PlainOutputStrategy implements AbstractStrategyExecutor<PromptPropertiesDTO, Mono<String>> {
     private final ChatClient chatClient;
 
-    public PlainOutputStrategy(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
+    public PlainOutputStrategy(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class PlainOutputStrategy implements AbstractStrategyExecutor<String, Mon
     }
 
     @Override
-    public Mono<String> executeResp(String prompt) {
-        return Mono.just(Optional.ofNullable(chatClient.prompt().user(prompt).call().content()).orElse(""));
+    public Mono<String> executeResp(PromptPropertiesDTO promptPropertiesDTO) {
+        return Mono.just(Optional.ofNullable(chatClient.prompt().user(promptPropertiesDTO.getPrompt()).call().content()).orElse(""));
     }
 }

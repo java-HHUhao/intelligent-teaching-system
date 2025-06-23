@@ -10,7 +10,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>frameworks</artifactId>
+    <artifactId>its-frameworks</artifactId>
     <packaging>pom</packaging>
 
     <modules>

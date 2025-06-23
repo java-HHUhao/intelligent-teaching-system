@@ -1,6 +1,8 @@
 package cn.edu.hhu.spring.boot.starter.aiagent.aimodels;
 
 import lombok.Data;
+import org.springframework.ai.document.DocumentReader;
+import org.springframework.ai.document.DocumentTransformer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;

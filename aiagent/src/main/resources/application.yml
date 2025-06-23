@@ -10,10 +10,23 @@ spring:
         options:
           model: qwen-plus
         enabled: true
+    vectorstore:
+      pgvector:
+        index-type: hnsw
+        dimensions: 1536
+        distance-type: cosine_distance
+        max-document-batch-size: 10000
+        table-name: documents
+        schema-name: its_vector_database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_vector_database,public
+    username: root
+    password: root
 server:
   port: 8100
   servlet:
     context-path: /api
+
     # springdoc 访问路径：http://localhost:8100/api/doc.html#/home
 springdoc:
   swagger-ui:
@@ -29,3 +42,7 @@ springdoc:
 logging:
   level:
     root: info
+
+# searchApi
+search-api:
+  api-key: vQVovcMVmkCN53q5yayMMr25

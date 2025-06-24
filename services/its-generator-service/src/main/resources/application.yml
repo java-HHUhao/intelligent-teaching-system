@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: its-generator-service
+  datasource:
+    password: root
+    username: root
+    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_generator_module,public
+    driver-class-name: org.postgresql.Driver
+server:
+  port: 8101
+  servlet:
+    context-path: /generator
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+  paths-to-match: '/**'
+  packages-to-scan: cn.edu.hhu.its.generator.service.controller

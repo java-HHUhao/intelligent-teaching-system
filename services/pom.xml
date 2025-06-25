@@ -15,9 +15,17 @@
         <module>its-user-service</module>
         <module>its-resource-service</module>
         <module>its-generator-service</module>
+        <module>its-gateway-service</module>
     </modules>
-    <!--    spring-->
+
     <dependencies>
+        <!--        项目依赖-->
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-distributedid-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--    spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

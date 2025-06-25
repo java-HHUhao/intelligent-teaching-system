@@ -1,7 +1,6 @@
 package cn.edu.hhu.its.aiagent.service.config;
 
 import cn.edu.hhu.its.aiagent.service.tools.*;
-import cn.edu.hhu.spring.boot.starter.aiagent.tools.*;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbacks;
 import org.springframework.beans.factory.annotation.Value;

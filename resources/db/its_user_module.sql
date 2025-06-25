@@ -139,6 +139,7 @@ CREATE TABLE its_user_module.user_group (
                             id BIGSERIAL PRIMARY KEY,
                             group_name VARCHAR(128) NOT NULL,
                             description TEXT,
+                            create_user BIGINT,
                             created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -163,6 +164,7 @@ COMMENT ON COLUMN its_user_module.user_group_mapping.user_id IS '用户ID';
 COMMENT ON COLUMN its_user_module.user_group_mapping.group_id IS '用户组ID';
 COMMENT ON COLUMN its_user_module.user_group_mapping.joined_at IS '加入时间';
 
+-- 用户收藏表
 CREATE TABLE its_user_module.user_favorite (
                                id BIGSERIAL PRIMARY KEY,                          -- 主键，自增ID
                                user_id BIGINT NOT NULL,                           -- 用户ID，逻辑外键，关联 user.id

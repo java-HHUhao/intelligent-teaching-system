@@ -1,7 +1,7 @@
 -- 用户表
 CREATE TABLE its_user_module."user"
 (
-    id         BIGSERIAL PRIMARY KEY,        -- 主键，自增ID
+    id         BIGINT PRIMARY KEY,        -- 主键，自增ID
     username   VARCHAR(64)  NOT NULL UNIQUE, -- 用户名，唯一
     password   VARCHAR(128) NOT NULL,        -- 密码，加密存储
     email      VARCHAR(128) UNIQUE,          -- 邮箱
@@ -13,7 +13,7 @@ CREATE TABLE its_user_module."user"
 );
 
 COMMENT ON TABLE its_user_module."user" IS '系统用户表';
-COMMENT ON COLUMN its_user_module."user".id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module."user".id IS '主键';
 COMMENT ON COLUMN its_user_module."user".username IS '用户名，唯一';
 COMMENT ON COLUMN its_user_module."user".password IS '密码，加密存储';
 COMMENT ON COLUMN its_user_module."user".email IS '电子邮箱';
@@ -26,31 +26,33 @@ COMMENT ON COLUMN its_user_module."user".is_deleted IS '逻辑删除标志';
 -- 用户详情表
 CREATE TABLE its_user_module."user_detail"
 (
-    id         BIGSERIAL PRIMARY KEY,   -- 主键，自增ID
+    id         BIGINT PRIMARY KEY,   -- 主键，自增ID
     user_id    BIGINT NOT NULL UNIQUE,  -- 用户ID，唯一
-    real_name  VARCHAR(64),             -- 真实姓名
     avatar_url TEXT,                    -- 头像地址
     gender     VARCHAR(10),             -- 性别
     birthday   DATE,                    -- 生日
+    address    VARCHAR(64)              -- 所在地区
     bio        TEXT,                    -- 简介
+    avatar_audit_status smallint default 0,-- 0=未提交，1=待审核，2=审核通过，3=驳回
     created_at TIMESTAMP DEFAULT NOW(), -- 创建时间
     updated_at TIMESTAMP DEFAULT NOW()  -- 更新时间
 );
 
 COMMENT ON TABLE its_user_module."user_detail" IS '用户详情信息表';
-COMMENT ON COLUMN its_user_module."user_detail".id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module."user_detail".id IS '主键';
 COMMENT ON COLUMN its_user_module."user_detail".user_id IS '关联用户ID';
-COMMENT ON COLUMN its_user_module."user_detail".real_name IS '真实姓名';
 COMMENT ON COLUMN its_user_module."user_detail".avatar_url IS '头像地址';
 COMMENT ON COLUMN its_user_module."user_detail".gender IS '性别';
 COMMENT ON COLUMN its_user_module."user_detail".birthday IS '生日';
+COMMENT ON COLUMN its_user_module."user_detail".address IS '所在地区';
 COMMENT ON COLUMN its_user_module."user_detail".bio IS '个人简介';
+COMMENT ON COLUMN its_user_module."user_detail".avatar_audit_status IS '头像审核状态';
 COMMENT ON COLUMN its_user_module."user_detail".created_at IS '创建时间';
 COMMENT ON COLUMN its_user_module."user_detail".updated_at IS '更新时间';
 
 -- 角色表
 CREATE TABLE its_user_module.role (
-                                      id BIGSERIAL PRIMARY KEY, -- 主键，自增ID
+                                      id BIGINT PRIMARY KEY, -- 主键
                                       name VARCHAR(64) NOT NULL UNIQUE, -- 角色名，如 ADMIN
                                       description TEXT, -- 描述
                                       created_at TIMESTAMP DEFAULT NOW(), -- 创建时间
@@ -58,7 +60,7 @@ CREATE TABLE its_user_module.role (
 );
 
 COMMENT ON TABLE its_user_module.role IS '系统角色表';
-COMMENT ON COLUMN its_user_module.role.id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module.role.id IS '主键';
 COMMENT ON COLUMN its_user_module.role.name IS '角色名，唯一，如 ADMIN';
 COMMENT ON COLUMN its_user_module.role.description IS '角色描述';
 COMMENT ON COLUMN its_user_module.role.created_at IS '创建时间';
@@ -66,7 +68,7 @@ COMMENT ON COLUMN its_user_module.role.updated_at IS '更新时间';
 
 -- 权限表
 CREATE TABLE its_user_module.permission (
-                                            id BIGSERIAL PRIMARY KEY, -- 主键，自增ID
+                                            id BIGINT PRIMARY KEY, -- 主键
                                             code VARCHAR(64) NOT NULL UNIQUE, -- 权限标识，如 resource:create
                                             name VARCHAR(128) NOT NULL, -- 权限中文名
                                             type VARCHAR(32), -- 权限类型，如 API、菜单、按钮
@@ -77,7 +79,7 @@ CREATE TABLE its_user_module.permission (
 );
 
 COMMENT ON TABLE its_user_module.permission IS '系统权限表';
-COMMENT ON COLUMN its_user_module.permission.id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module.permission.id IS '主键';
 COMMENT ON COLUMN its_user_module.permission.code IS '权限标识，唯一';
 COMMENT ON COLUMN its_user_module.permission.name IS '权限名称，中文';
 COMMENT ON COLUMN its_user_module.permission.type IS '权限类型，如 API、菜单、按钮';
@@ -88,7 +90,7 @@ COMMENT ON COLUMN its_user_module.permission.updated_at IS '更新时间';
 
 -- 用户角色关系表
 CREATE TABLE its_user_module.user_role (
-                                           id BIGSERIAL PRIMARY KEY, -- 主键，自增ID
+                                           id BIGINT PRIMARY KEY, -- 主键
                                            user_id BIGINT NOT NULL, -- 用户ID
                                            role_id BIGINT NOT NULL, -- 角色ID
                                            created_at TIMESTAMP DEFAULT NOW(), -- 创建时间
@@ -96,14 +98,14 @@ CREATE TABLE its_user_module.user_role (
 );
 
 COMMENT ON TABLE its_user_module.user_role IS '用户角色关系表';
-COMMENT ON COLUMN its_user_module.user_role.id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module.user_role.id IS '主键';
 COMMENT ON COLUMN its_user_module.user_role.user_id IS '用户ID';
 COMMENT ON COLUMN its_user_module.user_role.role_id IS '角色ID';
 COMMENT ON COLUMN its_user_module.user_role.created_at IS '创建时间';
 
 -- 角色权限关系表
 CREATE TABLE its_user_module.role_permission (
-                                                 id BIGSERIAL PRIMARY KEY, -- 主键，自增ID
+                                                 id BIGINT PRIMARY KEY, -- 主键
                                                  role_id BIGINT NOT NULL, -- 角色ID
                                                  permission_id BIGINT NOT NULL, -- 权限ID
                                                  created_at TIMESTAMP DEFAULT NOW(), -- 创建时间
@@ -111,14 +113,14 @@ CREATE TABLE its_user_module.role_permission (
 );
 
 COMMENT ON TABLE its_user_module.role_permission IS '角色权限关系表';
-COMMENT ON COLUMN its_user_module.role_permission.id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module.role_permission.id IS '主键';
 COMMENT ON COLUMN its_user_module.role_permission.role_id IS '角色ID';
 COMMENT ON COLUMN its_user_module.role_permission.permission_id IS '权限ID';
 COMMENT ON COLUMN its_user_module.role_permission.created_at IS '创建时间';
 
 -- 登录日志表
 CREATE TABLE its_user_module.login_log (
-                                           id BIGSERIAL PRIMARY KEY, -- 主键，自增ID
+                                           id BIGINT PRIMARY KEY, -- 主键
                                            user_id BIGINT, -- 用户ID
                                            login_time TIMESTAMP DEFAULT NOW(), -- 登录时间
                                            ip_address VARCHAR(45), -- IP地址
@@ -127,7 +129,7 @@ CREATE TABLE its_user_module.login_log (
 );
 
 COMMENT ON TABLE its_user_module.login_log IS '用户登录日志表';
-COMMENT ON COLUMN its_user_module.login_log.id IS '主键，自增ID';
+COMMENT ON COLUMN its_user_module.login_log.id IS '主键';
 COMMENT ON COLUMN its_user_module.login_log.user_id IS '关联用户ID';
 COMMENT ON COLUMN its_user_module.login_log.login_time IS '登录时间';
 COMMENT ON COLUMN its_user_module.login_log.ip_address IS '登录IP地址';
@@ -136,7 +138,7 @@ COMMENT ON COLUMN its_user_module.login_log.login_status IS '登录状态：1成
 
 -- 用户组
 CREATE TABLE its_user_module.user_group (
-                            id BIGSERIAL PRIMARY KEY,
+                            id BIGINT PRIMARY KEY,
                             group_name VARCHAR(128) NOT NULL,
                             description TEXT,
                             create_user BIGINT,
@@ -147,11 +149,12 @@ COMMENT ON TABLE its_user_module.user_group IS '用户组表，定义教学组/�
 COMMENT ON COLUMN its_user_module.user_group.id IS '用户组ID';
 COMMENT ON COLUMN its_user_module.user_group.group_name IS '组名称';
 COMMENT ON COLUMN its_user_module.user_group.description IS '组描述';
+COMMENT ON COLUMN its_user_module.user_group.create_user IS '创建者名称'
 COMMENT ON COLUMN its_user_module.user_group.created_at IS '创建时间';
 
 -- 用户和组关联表
 CREATE TABLE its_user_module.user_group_mapping (
-                                    id BIGSERIAL PRIMARY KEY,
+                                    id BIGINT PRIMARY KEY,
                                     user_id BIGINT NOT NULL,
                                     group_id BIGINT NOT NULL,
                                     joined_at TIMESTAMP DEFAULT NOW(),
@@ -166,7 +169,7 @@ COMMENT ON COLUMN its_user_module.user_group_mapping.joined_at IS '加入时间'
 
 -- 用户收藏表
 CREATE TABLE its_user_module.user_favorite (
-                               id BIGSERIAL PRIMARY KEY,                          -- 主键，自增ID
+                               id BIGINT PRIMARY KEY,                          -- 主键
                                user_id BIGINT NOT NULL,                           -- 用户ID，逻辑外键，关联 user.id
                                resource_id BIGINT NOT NULL,                       -- 资源ID，逻辑外键，关联 resource.id
                                favorited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 收藏时间

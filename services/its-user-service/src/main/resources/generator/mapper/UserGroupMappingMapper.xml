@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.hhu.its.user.service.mapper.UserGroupMappingMapper">
+<mapper namespace="cn.edu.hhu.its.user.service.model.mapper.UserGroupMappingMapper">
 
-    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.UserGroupMapping">
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.UserGroupMappingDO">
             <id property="id" column="id" />
             <result property="userId" column="user_id" />
             <result property="groupId" column="group_id" />
@@ -12,6 +12,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
+        <if test="true">
         id,user_id,group_id,joined_at
+        </if>
     </sql>
 </mapper>

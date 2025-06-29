@@ -19,15 +19,15 @@ spring:
         table-name: documents
         schema-name: its_vector_database
   datasource:
-    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_vector_database,public
+    url: jdbc:postgresql://localhost:5432/its?currentSchema=public
     username: root
     password: root
 server:
-  port: 8100
+  port: 8105
   servlet:
     context-path: /api
 
-    # springdoc 访问路径：http://localhost:8100/api/doc.html#/home
+    # springdoc 访问路径：http://localhost:8105/api/doc.html#/home
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -37,7 +37,7 @@ springdoc:
     path: /v3/api-docs
   group-configs:
   paths-to-match: '/**'
-  packages-to-scan: cn.edu.hhu.spring.boot.starter.aiagent.controller
+  packages-to-scan: cn.edu.hhu.its.aiagent.service.controller
 
 logging:
   level:

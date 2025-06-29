@@ -2,22 +2,25 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.hhu.its.user.service.mapper.UserDetailMapper">
+<mapper namespace="cn.edu.hhu.its.user.service.model.mapper.UserDetailMapper">
 
-    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.UserDetail">
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.UserDetailDO">
             <id property="id" column="id" />
             <result property="userId" column="user_id" />
-            <result property="realName" column="real_name" />
             <result property="avatarUrl" column="avatar_url" />
+            <result property="address" column="address" />
             <result property="gender" column="gender" />
             <result property="birthday" column="birthday" />
             <result property="bio" column="bio" />
             <result property="createdAt" column="created_at" />
             <result property="updatedAt" column="updated_at" />
+            <result property="avatarAuditStatus" column="avatar_audit_status" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,real_name,avatar_url,gender,birthday,
-        bio,created_at,updated_at
+        <if test="true">
+        id,user_id,avatar_url,address,gender,birthday,
+        bio,created_at,updated_at,avatar_audit_status
+        </if>
     </sql>
 </mapper>

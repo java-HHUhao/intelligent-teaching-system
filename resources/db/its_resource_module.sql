@@ -1,6 +1,6 @@
 -- 资源表
 CREATE TABLE its_resource_module.resource (
-                                            id BIGSERIAL PRIMARY KEY,  -- 主键
+                                            id BIGINT PRIMARY KEY,  -- 主键
                                             user_id BIGINT NOT NULL,  -- 上传用户ID
                                             title VARCHAR(255) NOT NULL,  -- 资源标题
                                             type VARCHAR(32) NOT NULL,  -- 资源类型：doc、ppt、video、image等
@@ -20,7 +20,7 @@ COMMENT ON COLUMN its_resource_module.resource.updated_at IS '更新时间';
 
 -- 资源详情表
 CREATE TABLE its_resource_module.resource_detail (
-                                                   id BIGSERIAL PRIMARY KEY,  -- 主键
+                                                   id BIGINT PRIMARY KEY,  -- 主键
                                                    resource_id BIGINT NOT NULL,  -- 关联的资源ID
                                                    file_path TEXT NOT NULL, -- 文件物理路径
                                                    description TEXT,  -- 资源描述
@@ -38,7 +38,7 @@ COMMENT ON COLUMN its_resource_module.resource_detail.created_at IS '创建时�
 
 -- 文件夹表
 CREATE TABLE its_resource_module.folder (
-                                          id BIGSERIAL PRIMARY KEY,  -- 主键
+                                          id BIGINT PRIMARY KEY,  -- 主键
                                           user_id BIGINT NOT NULL,  -- 所属用户
                                           parent_id BIGINT,  -- 父文件夹ID，根目录为NULL
                                           folder_name VARCHAR(128) NOT NULL,  -- 文件夹名称
@@ -56,7 +56,7 @@ COMMENT ON COLUMN its_resource_module.folder.created_at IS '创建时间';
 COMMENT ON COLUMN its_resource_module.folder.updated_at IS '更新时间';
 -- 文件夹资源映射表
 CREATE TABLE its_resource_module.folder_resource_mapping (
-                                                           id BIGSERIAL PRIMARY KEY,
+                                                           id BIGINT PRIMARY KEY,
                                                            folder_id BIGINT NOT NULL,  -- 文件夹ID
                                                            resource_id BIGINT NOT NULL,  -- 资源ID
                                                            resource_alias VARCHAR(255) NOT NULL,  -- 在该文件夹中的资源显示名
@@ -73,7 +73,7 @@ COMMENT ON COLUMN its_resource_module.folder_resource_mapping.created_at IS '创
 
 -- 资源组表
 CREATE TABLE its_resource_module.group_resource (
-                                                  id BIGSERIAL PRIMARY KEY,
+                                                  id BIGINT PRIMARY KEY,
                                                   group_id BIGINT NOT NULL,  -- 用户组ID
                                                   resource_id BIGINT NOT NULL,  -- 资源ID
                                                   created_at TIMESTAMP DEFAULT NOW(),

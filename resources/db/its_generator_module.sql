@@ -1,6 +1,6 @@
 -- 生成任务表
 CREATE TABLE its_generator_module.generate_task (
-                                                    id BIGSERIAL PRIMARY KEY, -- 主键
+                                                    id BIGINT PRIMARY KEY, -- 主键
                                                     user_id BIGINT NOT NULL, -- 发起用户
                                                     input_type VARCHAR(32) NOT NULL, -- 输入类型：text/image/doc/template等
                                                     input_data TEXT NOT NULL, -- 原始输入内容或路径
@@ -23,7 +23,7 @@ COMMENT ON COLUMN its_generator_module.generate_task.error_message IS '任务失
 
 -- 任务日志表
 CREATE TABLE its_generator_module.generate_task_log (
-                                                        id BIGSERIAL PRIMARY KEY,
+                                                        id BIGINT PRIMARY KEY,
                                                         task_id BIGINT NOT NULL, -- 对应的任务ID
                                                         status VARCHAR(16) NOT NULL, -- 状态：PENDING/PROCESSING/FAILED/SUCCESS
                                                         message TEXT, -- 附加说明或日志

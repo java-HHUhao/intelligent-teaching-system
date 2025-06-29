@@ -1,6 +1,7 @@
 package cn.edu.hhu.spring.boot.starter.common.utils;
 
 import cn.edu.hhu.spring.boot.starter.common.enums.BaseErrorCode;
+import cn.edu.hhu.spring.boot.starter.common.enums.CommonErrorCode;
 import cn.edu.hhu.spring.boot.starter.common.exception.AbstractException;
 import cn.edu.hhu.spring.boot.starter.common.result.Result;
 import java.lang.Void;
@@ -20,10 +21,10 @@ public class ResultUtil {
         return new Result<Void>().setCode(errorCode.getCode()).setMessage(errorCode.getMessage());
     }
     public static Result<Void> fail(AbstractException exception){
-        return new Result<Void>().setCode(Optional.ofNullable(exception.getErrorCode()).orElse(BaseErrorCode.SERVICE_ERROR.getCode()))
+        return new Result<Void>().setCode(Optional.ofNullable(exception.getErrorCode()).orElse(CommonErrorCode.SERVICE_ERROR.getCode()))
                 .setMessage(Optional.ofNullable(exception.getMessage()).orElse(exception.getMessage()));
     }
     public static Result<Void> fail(){
-        return new Result<Void>().setCode(BaseErrorCode.SERVICE_ERROR.getCode()).setMessage(BaseErrorCode.SERVICE_ERROR.getMessage());
+        return new Result<Void>().setCode(CommonErrorCode.SERVICE_ERROR.getCode()).setMessage(CommonErrorCode.SERVICE_ERROR.getMessage());
     }
 }

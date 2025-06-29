@@ -8,6 +8,22 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <dependencies>
+<!--        项目依赖-->
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-common-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-web-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-log-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 <!--        缓存-->
         <dependency>
             <groupId>org.redisson</groupId>
@@ -29,6 +45,14 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

@@ -8,4 +8,6 @@ public class WebAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public GlobalExceptionHandler globalExceptionHandler() {return new GlobalExceptionHandler();}
+    @Bean
+    public CorsConfig corsConfig() {return new CorsConfig();}
 }

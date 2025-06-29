@@ -12,9 +12,9 @@ import java.util.Optional;
 public abstract class AbstractException extends RuntimeException {
     protected final String errorCode;
     protected final String errorMessage;
-    public AbstractException(BaseErrorCode errorCode,String errorMessage,Throwable throwable) {
+    public AbstractException(BaseErrorCode baseErrorCode, String errorMessage, Throwable throwable) {
         super(errorMessage,throwable);
-        this.errorCode= errorCode.getCode();
-        this.errorMessage=Optional.ofNullable(errorMessage).orElse(errorCode.getMessage());
+        this.errorCode= baseErrorCode==null?"":baseErrorCode.getCode();
+        this.errorMessage=Optional.ofNullable(errorMessage).orElse(baseErrorCode==null?"":baseErrorCode.getCode());
     }
 }

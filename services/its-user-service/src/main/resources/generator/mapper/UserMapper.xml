@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.hhu.its.user.service.mapper.UserMapper">
+<mapper namespace="cn.edu.hhu.its.user.service.model.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.User">
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.user.service.model.domain.UserDO">
             <id property="id" column="id" />
             <result property="username" column="username" />
             <result property="password" column="password" />
@@ -17,7 +17,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
+        <if test="true">
         id,username,password,email,phone,status,
         created_at,updated_at,is_deleted
+        </if>
     </sql>
 </mapper>

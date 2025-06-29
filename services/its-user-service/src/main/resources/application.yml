@@ -4,7 +4,7 @@ spring:
   datasource:
     password: root
     username: root
-    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_generator_module,public
+    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_user_module,public
     driver-class-name: org.postgresql.Driver
   data:
     redis:

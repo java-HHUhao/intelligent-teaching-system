@@ -1,6 +1,11 @@
 spring:
   application:
-    name: its-generator-service
+    name: its-resource-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
   datasource:
     password: root
     username: root
@@ -8,8 +13,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 server:
   port: 8102
-  servlet:
-    context-path: /resource
 
 springdoc:
   swagger-ui:

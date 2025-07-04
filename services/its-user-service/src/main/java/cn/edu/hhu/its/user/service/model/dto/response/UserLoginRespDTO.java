@@ -1,4 +1,4 @@
-package cn.edu.hhu.its.user.service.model.dto.resp;
+package cn.edu.hhu.its.user.service.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

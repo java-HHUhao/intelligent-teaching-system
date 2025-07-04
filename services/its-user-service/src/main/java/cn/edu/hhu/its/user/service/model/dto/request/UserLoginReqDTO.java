@@ -1,4 +1,4 @@
-package cn.edu.hhu.its.user.service.model.dto.req;
+package cn.edu.hhu.its.user.service.model.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

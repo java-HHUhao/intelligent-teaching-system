@@ -1,15 +1,18 @@
 spring:
   application:
     name: its-generator-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
   datasource:
     password: root
     username: root
     url: jdbc:postgresql://localhost:5432/its?currentSchema=its_generator_module,public
     driver-class-name: org.postgresql.Driver
 server:
-  port: 8101
-  servlet:
-    context-path: /generator
+  port: 8103
 
 springdoc:
   swagger-ui:

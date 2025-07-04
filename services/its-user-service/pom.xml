@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <dependencies>
-<!--        项目依赖-->
+        <!--        项目依赖-->
         <dependency>
             <groupId>cn.edu.hhu</groupId>
             <artifactId>its-common-spring-boot-starter</artifactId>
@@ -24,7 +24,39 @@
             <artifactId>its-log-spring-boot-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        缓存-->
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-distributedid-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--    spring-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <!--        orm-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+        <!--    文档-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+        <!--        缓存-->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
@@ -33,7 +65,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-<!--        jwt-->
+        <!--        jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -46,6 +78,7 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
         </dependency>
+        <!--        校验-->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -57,7 +90,6 @@
     </dependencies>
 
     <artifactId>its-user-service</artifactId>
-
 
 
 </project>

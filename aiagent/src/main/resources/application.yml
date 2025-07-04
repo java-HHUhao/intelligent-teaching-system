@@ -1,6 +1,10 @@
 spring:
   application:
-    name: intelligent-teaching-system
+    name: its-ai-agent
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   config:
     import: optional:models.yml
   ai:

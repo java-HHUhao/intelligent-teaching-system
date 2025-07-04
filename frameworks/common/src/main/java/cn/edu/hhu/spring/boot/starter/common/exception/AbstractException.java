@@ -13,7 +13,7 @@ public abstract class AbstractException extends RuntimeException {
     protected final String errorCode;
     protected final String errorMessage;
     public AbstractException(BaseErrorCode baseErrorCode, String errorMessage, Throwable throwable) {
-        super(errorMessage,throwable);
+        super(baseErrorCode!=null? baseErrorCode.getMessage() : errorMessage,throwable);
         this.errorCode= baseErrorCode==null?"":baseErrorCode.getCode();
         this.errorMessage=Optional.ofNullable(errorMessage).orElse(baseErrorCode==null?"":baseErrorCode.getCode());
     }

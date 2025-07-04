@@ -1,6 +1,16 @@
 spring:
   application:
-    name: its-generator-service
+    name: its-user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
+      config:
+        server-addr: 127.0.0.1:8848
+  config:
+    import:
+      - nacos:its-user-service.yml
   datasource:
     password: root
     username: root
@@ -19,9 +29,7 @@ spring:
         singleServerConfig:
           address: "redis://127.0.0.1:6379"
 server:
-  port: 8103
-  servlet:
-    context-path: /user
+  port: 8101
 #文档
 springdoc:
   swagger-ui:

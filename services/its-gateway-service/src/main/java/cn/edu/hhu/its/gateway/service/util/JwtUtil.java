@@ -1,4 +1,4 @@
-package cn.edu.hhu.its.user.service.util;
+package cn.edu.hhu.its.gateway.service.util;
 
 
 import io.jsonwebtoken.*;
@@ -8,7 +8,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
-public class JWTUtil {
+public class JwtUtil {
 
     // 密钥
     private static final String SECRET = "mySuperSecretKey1234567890!@#$%^&*"; // 必须 >= 256bit

@@ -23,6 +23,7 @@
         <module>context</module>
         <module>mq</module>
         <module>store</module>
+        <module>idempotent</module>
     </modules>
 
 </project>

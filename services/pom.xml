@@ -8,17 +8,23 @@
         <artifactId>intelligent-teaching-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>its-services</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>its-user-service</module>
-        <module>its-resource-service</module>
-        <module>its-generator-service</module>
         <module>its-gateway-service</module>
+        <module>its-generator-service</module>
+        <module>its-resource-service</module>
+        <module>its-user-service</module>
     </modules>
-
+    <!--    项目依赖-->
     <dependencies>
+        <dependency>
+            <groupId>cn.edu.hhu</groupId>
+            <artifactId>its-store-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Spring Cloud Alibaba Nacos 注册发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

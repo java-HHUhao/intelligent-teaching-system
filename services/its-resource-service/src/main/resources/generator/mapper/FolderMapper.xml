@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.hhu.its.resource.service.mapper.FolderMapper">
+<mapper namespace="cn.edu.hhu.its.resource.service.model.mapper.FolderMapper">
 
-    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.resource.service.model.domain.Folder">
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.resource.service.model.domain.FolderDO">
             <id property="id" column="id" />
             <result property="userId" column="user_id" />
             <result property="parentId" column="parent_id" />

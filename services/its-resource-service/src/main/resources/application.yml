@@ -14,6 +14,17 @@ spring:
 server:
   port: 8102
 
+mybatis:
+  mapper-locations: classpath:generator/mapper/*.xml
+
+its:
+  minio:
+    endpoint: http://127.0.0.1:9000
+    access-key: root
+    secret-key: rootroot
+    bucket-name: its-resource
+    secure: false
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

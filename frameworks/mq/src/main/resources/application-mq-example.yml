@@ -1,0 +1,56 @@
+# MQ配置示例
+its:
+  mq:
+    # 是否启用MQ
+    enabled: true
+    # MQ类型：rocketmq, redis, rabbitmq, kafka
+    type: rocketmq
+    # RocketMQ名称服务器地址
+    name-server: localhost:9876
+    # 生产者组
+    producer-group: ITS_PRODUCER_GROUP
+    
+    # RocketMQ特定配置
+    rocketmq:
+      # 发送超时时间（毫秒）
+      send-timeout: 3000
+      # 发送失败重试次数
+      retry-times: 3
+      # 异步发送失败重试次数
+      async-retry-times: 3
+      # 最大消息大小（字节）
+      max-message-size: 4194304
+    
+    # Redis特定配置（当type=redis时使用）
+    redis:
+      host: localhost
+      port: 6379
+      password: 
+      database: 0
+      timeout: 3000
+    
+    # 消费者配置
+    consumer:
+      # 默认消费者组
+      default-group: ITS_CONSUMER_GROUP
+      # 消费线程数最小值
+      thread-min: 20
+      # 消费线程数最大值
+      thread-max: 64
+      # 批量消费最大消息数
+      batch-max-size: 1
+      # 消费超时时间（分钟）
+      timeout: 15
+      # 最大重试次数
+      max-retry-times: 16
+    
+    # 生产者配置
+    producer:
+      # 发送队列线程数
+      send-threads: 4
+      # 发送队列大小
+      send-queue-size: 10000
+      # 压缩消息阈值（字节）
+      compress-threshold: 4096
+      # 是否启用压缩
+      compress-enabled: false 

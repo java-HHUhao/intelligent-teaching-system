@@ -2,14 +2,7 @@ package cn.edu.hhu.spring.boot.starter.common.enums;
 
 import lombok.AllArgsConstructor;
 
-/**
- * 通用错误码
- * 错误码格式：服务标识 + 具体错误码
- * 服务标识：
- * USER - 用户服务
- * RES - 资源服务
- * GEN - 生成服务
- */
+
 @AllArgsConstructor
 public enum CommonErrorCode implements BaseErrorCode {
     

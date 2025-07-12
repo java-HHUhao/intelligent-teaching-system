@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hhu.its.message.service.model.mapper.AuditConfigMapper">
+
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.message.service.model.domain.AuditConfigDO">
+            <id property="id" column="id" />
+            <result property="auditType" column="audit_type" />
+            <result property="configName" column="config_name" />
+            <result property="autoAudit" column="auto_audit" />
+            <result property="auditTimeout" column="audit_timeout" />
+            <result property="requiredAuditorCount" column="required_auditor_count" />
+            <result property="auditRules" column="audit_rules" />
+            <result property="isActive" column="is_active" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,audit_type,config_name,auto_audit,audit_timeout,required_auditor_count,
+        audit_rules,is_active,created_at,updated_at
+    </sql>
+</mapper>

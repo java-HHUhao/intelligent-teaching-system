@@ -1,6 +1,6 @@
 package cn.edu.hhu.its.user.service.service;
 
-import cn.edu.hhu.its.user.service.model.dto.response.UserPermissionRespDTO;
+import cn.edu.hhu.spring.boot.starter.common.dto.UserPermissionDTO;
 
 public interface AuthService {
     /**
@@ -10,5 +10,5 @@ public interface AuthService {
      * @param username 用户名
      * @return 用户权限信息
      */
-    UserPermissionRespDTO getUserPermissions(Long userId, String username);
+    UserPermissionDTO getUserPermissions(Long userId, String username);
 }

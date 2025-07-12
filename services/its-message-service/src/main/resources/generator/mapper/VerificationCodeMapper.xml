@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hhu.its.message.service.model.mapper.VerificationCodeMapper">
+
+    <resultMap id="BaseResultMap" type="cn.edu.hhu.its.message.service.model.domain.VerificationCodeDO">
+            <id property="id" column="id" />
+            <result property="codeType" column="code_type" />
+            <result property="target" column="target" />
+            <result property="code" column="code" />
+            <result property="userId" column="user_id" />
+            <result property="ipAddress" column="ip_address" />
+            <result property="attempts" column="attempts" />
+            <result property="isUsed" column="is_used" />
+            <result property="expiresAt" column="expires_at" />
+            <result property="usedAt" column="used_at" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code_type,target,code,user_id,ip_address,
+        attempts,is_used,expires_at,used_at,created_at
+    </sql>
+</mapper>

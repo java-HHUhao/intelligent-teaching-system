@@ -86,3 +86,52 @@ COMMENT ON COLUMN its_resource_module.group_resource.group_id IS '用户组ID';
 COMMENT ON COLUMN its_resource_module.group_resource.resource_id IS '资源ID';
 COMMENT ON COLUMN its_resource_module.group_resource.created_at IS '创建时间';
 
+-- 用户组
+CREATE TABLE its_user_module.user_group (
+                                            id BIGINT PRIMARY KEY,
+                                            group_name VARCHAR(128) NOT NULL,
+                                            description TEXT,
+                                            create_user BIGINT,
+                                            created_at TIMESTAMP DEFAULT NOW()
+);
+
+COMMENT ON TABLE its_user_module.user_group IS '用户组表，定义教学组/班级等逻辑分组';
+COMMENT ON COLUMN its_user_module.user_group.id IS '用户组ID';
+COMMENT ON COLUMN its_user_module.user_group.group_name IS '组名称';
+COMMENT ON COLUMN its_user_module.user_group.description IS '组描述';
+COMMENT ON COLUMN its_user_module.user_group.create_user IS '创建者名称';
+COMMENT ON COLUMN its_user_module.user_group.created_at IS '创建时间';
+
+-- 用户和组关联表
+CREATE TABLE its_user_module.user_group_mapping (
+                                                    id BIGINT PRIMARY KEY,
+                                                    user_id BIGINT NOT NULL,
+                                                    group_id BIGINT NOT NULL,
+                                                    joined_at TIMESTAMP DEFAULT NOW(),
+                                                    UNIQUE(user_id, group_id)
+);
+
+COMMENT ON TABLE its_user_module.user_group_mapping IS '用户与用户组的多对多关联表';
+COMMENT ON COLUMN its_user_module.user_group_mapping.id IS '主键ID';
+COMMENT ON COLUMN its_user_module.user_group_mapping.user_id IS '用户ID';
+COMMENT ON COLUMN its_user_module.user_group_mapping.group_id IS '用户组ID';
+COMMENT ON COLUMN its_user_module.user_group_mapping.joined_at IS '加入时间';
+
+-- 用户收藏表
+CREATE TABLE its_user_module.user_favorite (
+                                               id BIGINT PRIMARY KEY,                          -- 主键
+                                               user_id BIGINT NOT NULL,                           -- 用户ID，逻辑外键，关联 user.id
+                                               resource_id BIGINT NOT NULL,                       -- 资源ID，逻辑外键，关联 resource.id
+                                               favorited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 收藏时间
+                                               remark TEXT,                                       -- 备注，可选
+                                               is_deleted BOOLEAN DEFAULT FALSE,                  -- 逻辑删除标志
+
+                                               CONSTRAINT uq_user_resource UNIQUE (user_id, resource_id)  -- 防重复收藏
+);
+COMMENT ON TABLE its_user_module.user_favorite IS '用户收藏表';
+comment on column its_user_module.user_favorite.id is '主键ID';
+comment on column its_user_module.user_favorite.user_id is '关联用户ID';
+COMMENT ON COLUMN its_user_module.user_favorite.resource_id IS '关联资源ID';
+COMMENT ON COLUMN its_user_module.user_favorite.favorited_at IS '收藏时间';
+comment on  column its_user_module.user_favorite.remark is '备注';
+comment on column its_user_module.user_favorite.is_deleted is '逻辑删除标志';

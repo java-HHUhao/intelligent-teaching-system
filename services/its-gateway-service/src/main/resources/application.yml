@@ -1,20 +1,53 @@
 spring:
   application:
     name: its-gateway-service
+
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         ip: 127.0.0.1
+        heart-beat-interval: 3000
+        heart-beat-timeout: 9000
+        group: DEFAULT_GROUP
+        weight: 1
+        enabled: true
+        ephemeral: true
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
         refresh-enabled: true
 
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:8080" # 前端地址
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            exposedHeaders: "*"
 
+    loadbalancer:
+      retry:
+        enabled: true
+        max-retries-on-same-service-instance: 2
+        max-retries-on-next-service-instance: 1
+        retry-on-all-operations: true
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
 
   config:
     import:
       - optional:nacos:its-gateway-service.yaml
+
 server:
   port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

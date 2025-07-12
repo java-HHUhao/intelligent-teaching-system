@@ -1,7 +1,7 @@
 -- 用户表
-CREATE TABLE its_user_module."user"
+CREATE TABLE its_user_module.sys_user
 (
-    id         BIGINT PRIMARY KEY,        -- 主键，自增ID
+    id         BIGINT PRIMARY KEY,        -- 主键
     username   VARCHAR(64)  NOT NULL UNIQUE, -- 用户名，唯一
     password   VARCHAR(128) NOT NULL,        -- 密码，加密存储
     email      VARCHAR(128) UNIQUE,          -- 邮箱
@@ -12,21 +12,21 @@ CREATE TABLE its_user_module."user"
     is_deleted BOOLEAN   DEFAULT FALSE       -- 是否逻辑删除
 );
 
-COMMENT ON TABLE its_user_module."user" IS '系统用户表';
-COMMENT ON COLUMN its_user_module."user".id IS '主键';
-COMMENT ON COLUMN its_user_module."user".username IS '用户名，唯一';
-COMMENT ON COLUMN its_user_module."user".password IS '密码，加密存储';
-COMMENT ON COLUMN its_user_module."user".email IS '电子邮箱';
-COMMENT ON COLUMN its_user_module."user".phone IS '手机号';
-COMMENT ON COLUMN its_user_module."user".status IS '状态：1-启用，0-禁用';
-COMMENT ON COLUMN its_user_module."user".created_at IS '创建时间';
-COMMENT ON COLUMN its_user_module."user".updated_at IS '更新时间';
-COMMENT ON COLUMN its_user_module."user".is_deleted IS '逻辑删除标志';
+COMMENT ON TABLE its_user_module.sys_user IS '系统用户表';
+COMMENT ON COLUMN its_user_module.sys_user.id IS '主键';
+COMMENT ON COLUMN its_user_module.sys_user.username IS '用户名，唯一';
+COMMENT ON COLUMN its_user_module.sys_user.password IS '密码，加密存储';
+COMMENT ON COLUMN its_user_module.sys_user.email IS '电子邮箱';
+COMMENT ON COLUMN its_user_module.sys_user.phone IS '手机号';
+COMMENT ON COLUMN its_user_module.sys_user.status IS '状态：1-启用，0-禁用';
+COMMENT ON COLUMN its_user_module.sys_user.created_at IS '创建时间';
+COMMENT ON COLUMN its_user_module.sys_user.updated_at IS '更新时间';
+COMMENT ON COLUMN its_user_module.sys_user.is_deleted IS '逻辑删除标志';
 
 -- 用户详情表
 CREATE TABLE its_user_module."user_detail"
 (
-    id         BIGINT PRIMARY KEY,   -- 主键，自增ID
+    id         BIGINT PRIMARY KEY,   -- 主键
     user_id    BIGINT NOT NULL UNIQUE,  -- 用户ID，唯一
     avatar_url TEXT,                    -- 头像地址
     gender     VARCHAR(10),             -- 性别
@@ -135,53 +135,3 @@ COMMENT ON COLUMN its_user_module.login_log.login_time IS '登录时间';
 COMMENT ON COLUMN its_user_module.login_log.ip_address IS '登录IP地址';
 COMMENT ON COLUMN its_user_module.login_log.user_agent IS '用户代理信息';
 COMMENT ON COLUMN its_user_module.login_log.login_status IS '登录状态：1成功，0失败';
-
--- 用户组
-CREATE TABLE its_user_module.user_group (
-                            id BIGINT PRIMARY KEY,
-                            group_name VARCHAR(128) NOT NULL,
-                            description TEXT,
-                            create_user BIGINT,
-                            created_at TIMESTAMP DEFAULT NOW()
-);
-
-COMMENT ON TABLE its_user_module.user_group IS '用户组表，定义教学组/班级等逻辑分组';
-COMMENT ON COLUMN its_user_module.user_group.id IS '用户组ID';
-COMMENT ON COLUMN its_user_module.user_group.group_name IS '组名称';
-COMMENT ON COLUMN its_user_module.user_group.description IS '组描述';
-COMMENT ON COLUMN its_user_module.user_group.create_user IS '创建者名称'
-COMMENT ON COLUMN its_user_module.user_group.created_at IS '创建时间';
-
--- 用户和组关联表
-CREATE TABLE its_user_module.user_group_mapping (
-                                    id BIGINT PRIMARY KEY,
-                                    user_id BIGINT NOT NULL,
-                                    group_id BIGINT NOT NULL,
-                                    joined_at TIMESTAMP DEFAULT NOW(),
-                                    UNIQUE(user_id, group_id)
-);
-
-COMMENT ON TABLE its_user_module.user_group_mapping IS '用户与用户组的多对多关联表';
-COMMENT ON COLUMN its_user_module.user_group_mapping.id IS '主键ID';
-COMMENT ON COLUMN its_user_module.user_group_mapping.user_id IS '用户ID';
-COMMENT ON COLUMN its_user_module.user_group_mapping.group_id IS '用户组ID';
-COMMENT ON COLUMN its_user_module.user_group_mapping.joined_at IS '加入时间';
-
--- 用户收藏表
-CREATE TABLE its_user_module.user_favorite (
-                               id BIGINT PRIMARY KEY,                          -- 主键
-                               user_id BIGINT NOT NULL,                           -- 用户ID，逻辑外键，关联 user.id
-                               resource_id BIGINT NOT NULL,                       -- 资源ID，逻辑外键，关联 resource.id
-                               favorited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 收藏时间
-                               remark TEXT,                                       -- 备注，可选
-                               is_deleted BOOLEAN DEFAULT FALSE,                  -- 逻辑删除标志
-
-                               CONSTRAINT uq_user_resource UNIQUE (user_id, resource_id)  -- 防重复收藏
-);
-COMMENT ON TABLE its_user_module.user_favorite IS '用户收藏表';
-comment on column its_user_module.user_favorite.id is '主键ID';
-comment on column its_user_module.user_favorite.user_id is '关联用户ID';
-COMMENT ON COLUMN its_user_module.user_favorite.resource_id IS '关联资源ID';
-COMMENT ON COLUMN its_user_module.user_favorite.favorited_at IS '收藏时间';
-comment on  column its_user_module.user_favorite.remark is '备注';
-comment on column its_user_module.user_favorite.is_deleted is '逻辑删除标志';

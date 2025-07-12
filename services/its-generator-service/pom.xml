@@ -26,11 +26,6 @@
             <artifactId>its-log-spring-boot-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.edu.hhu</groupId>
-            <artifactId>its-distributedid-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!--    spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

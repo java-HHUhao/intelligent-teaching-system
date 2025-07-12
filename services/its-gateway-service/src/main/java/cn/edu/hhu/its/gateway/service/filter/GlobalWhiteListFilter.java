@@ -22,10 +22,14 @@ public class GlobalWhiteListFilter implements GlobalFilter{
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
 
-        if (ignoreUrlsConfig.getWhitePaths().stream().anyMatch(path::startsWith)) {
-            return chain.filter(exchange); // 放行
+        boolean isWhite = ignoreUrlsConfig.getWhitePaths().stream()
+                .anyMatch(path::startsWith);
+
+        if (isWhite) {
+            // 设置标记，供后续过滤器判断
+            exchange.getAttributes().put("isWhite", true);
         }
 
-        return chain.filter(exchange); // 非白名单，继续后续过滤器
+        return chain.filter(exchange); // 所有请求都继续执行，但标记了白名单
     }
 }

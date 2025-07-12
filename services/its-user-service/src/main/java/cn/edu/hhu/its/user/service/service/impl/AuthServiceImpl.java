@@ -5,7 +5,7 @@ import cn.edu.hhu.its.user.service.common.cache.UserCachePrefix;
 import cn.edu.hhu.its.user.service.model.domain.PermissionDO;
 import cn.edu.hhu.its.user.service.model.domain.RolePermissionDO;
 import cn.edu.hhu.its.user.service.model.domain.UserRoleDO;
-import cn.edu.hhu.its.user.service.model.dto.response.UserPermissionRespDTO;
+import cn.edu.hhu.spring.boot.starter.common.dto.UserPermissionDTO;
 import cn.edu.hhu.its.user.service.model.mapper.PermissionMapper;
 import cn.edu.hhu.its.user.service.model.mapper.RolePermissionMapper;
 import cn.edu.hhu.its.user.service.model.mapper.UserRoleMapper;
@@ -30,12 +30,11 @@ public class AuthServiceImpl implements AuthService {
     private final PermissionMapper permissionMapper;
     private final RedisTemplate<String, Object> redisTemplate;
 
-
     @Override
-    public UserPermissionRespDTO getUserPermissions(Long userId, String username) {
+    public UserPermissionDTO getUserPermissions(Long userId, String username) {
         // 1. 尝试从缓存中获取
         String cacheKey = UserCachePrefix.PERMISSIONS + userId;
-        UserPermissionRespDTO cachedPermissions = (UserPermissionRespDTO) redisTemplate.opsForValue().get(cacheKey);
+        UserPermissionDTO cachedPermissions = (UserPermissionDTO) redisTemplate.opsForValue().get(cacheKey);
         if (cachedPermissions != null) {
             return cachedPermissions;
         }
@@ -49,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (userRoles.isEmpty()) {
             // 用户没有角色，返回空权限列表
-            UserPermissionRespDTO emptyPermissions = new UserPermissionRespDTO()
+            UserPermissionDTO emptyPermissions = new UserPermissionDTO()
                     .setUserId(userId)
                     .setUsername(username)
                     .setPermissions(new ArrayList<>());
@@ -71,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (rolePermissions.isEmpty()) {
             // 角色没有权限，返回空权限列表
-            UserPermissionRespDTO emptyPermissions = new UserPermissionRespDTO()
+            UserPermissionDTO emptyPermissions = new UserPermissionDTO()
                     .setUserId(userId)
                     .setUsername(username)
                     .setPermissions(new ArrayList<>());
@@ -96,7 +95,7 @@ public class AuthServiceImpl implements AuthService {
                 .collect(Collectors.toList());
 
         // 3. 构建返回结果
-        UserPermissionRespDTO result = new UserPermissionRespDTO()
+        UserPermissionDTO result = new UserPermissionDTO()
                 .setUserId(userId)
                 .setUsername(username)
                 .setPermissions(permissionCodes);

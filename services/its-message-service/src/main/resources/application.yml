@@ -1,0 +1,103 @@
+spring:
+  application:
+    name: its-message-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
+      config:
+        server-addr: 127.0.0.1:8848
+  config:
+    import:
+      - nacos:its-message-service.yml
+  datasource:
+    password: root
+    username: root
+    url: jdbc:postgresql://localhost:5432/its?currentSchema=its_message_module,public
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      connect-timeout: 5000
+      database: 0
+  redis:
+    redisson:
+      config: |
+        singleServerConfig:
+          address: "redis://127.0.0.1:6379"
+server:
+  port: 8105
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+  paths-to-match: '/**'
+  packages-to-scan: cn.edu.hhu.its.message.service.controller
+
+
+## 自定义配置
+its:
+  # 线程池配置
+  thread-pool:
+    enabled: true
+    executors:
+      # 消息发送线程池
+      message-send-pool:
+        core-pool-size: 4
+        max-pool-size: 8
+        queue-capacity: 100
+        keep-alive-seconds: 60
+        thread-name-prefix: "message-send-"
+      # 模板处理线程池
+      template-process-pool:
+        core-pool-size: 2
+        max-pool-size: 4
+        queue-capacity: 50
+        keep-alive-seconds: 60
+        thread-name-prefix: "template-process-"
+
+  message:
+#    # 验证码配置
+#    verification:
+#      # 图片验证码配置
+#      image:
+#        width: 120
+#        height: 40
+#        length: 4
+#        expire-minutes: 5
+#      # 邮件验证码配置
+#      email:
+#        length: 6
+#        expire-minutes: 10
+#        max-attempts: 5
+#      # 短信验证码配置
+#      sms:
+#        length: 6
+#        expire-minutes: 5
+#        max-attempts: 3
+#
+#    # 站内消息配置
+#    site-message:
+#      # 消息过期时间（天）
+#      default-expire-days: 30
+#      # 每页消息数量
+#      page-size: 20
+#      # 批量标记已读最大数量
+#      batch-read-max-size: 100
+#
+#    # 审核配置
+#    audit:
+#      # 审核超时时间（小时）
+#      default-timeout-hours: 72
+#      # 自动审核开关
+#      auto-audit-enabled: true
+#      # 审核通知开关
+#      notification-enabled: true

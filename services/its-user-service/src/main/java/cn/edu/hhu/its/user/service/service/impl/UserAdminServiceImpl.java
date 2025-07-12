@@ -21,7 +21,7 @@ import cn.edu.hhu.its.user.service.model.mapper.RolePermissionMapper;
 import cn.edu.hhu.its.user.service.model.mapper.PermissionMapper;
 import cn.edu.hhu.its.user.service.service.UserAdminService;
 import cn.edu.hhu.spring.boot.starter.common.exception.ClientException;
-import cn.edu.hhu.spring.boot.starter.common.model.PageResult;
+import cn.edu.hhu.spring.boot.starter.common.page.PageResult;
 import cn.edu.hhu.spring.boot.starter.common.utils.ExceptionUtil;
 import cn.edu.hhu.spring.boot.starter.distributedid.handler.IdGeneratorManager;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -53,15 +53,50 @@ public class UserAdminServiceImpl implements UserAdminService {
 
     @Override
     public PageResult<UserListRespDTO> getUserList() {
-        // 查询所有用户
-        List<UserDO> userList = userMapper.selectList(null);
+        // 查询所有用户（排除已删除的用户）
+        List<UserDO> userList = userMapper.selectList(
+                new LambdaQueryWrapper<UserDO>()
+                        .eq(UserDO::getIsDeleted, false)
+                        .orderByDesc(UserDO::getCreatedAt)
+        );
         
-        // 转换为DTO
+        if (userList.isEmpty()) {
+            return PageResult.<UserListRespDTO>builder()
+                    .pageNum(1)
+                    .pageSize(0)
+                    .total(0L)
+                    .list(List.of())
+                    .build();
+        }
+
+        // 获取用户ID列表
+        List<Long> userIds = userList.stream()
+                .map(UserDO::getId)
+                .collect(Collectors.toList());
+
+        // 批量查询用户详情
+        List<UserDetailDO> userDetails = userDetailMapper.selectList(
+                new LambdaQueryWrapper<UserDetailDO>()
+                        .in(UserDetailDO::getUserId, userIds)
+        );
+
+        // 构建用户ID到详情的映射
+        Map<Long, UserDetailDO> userDetailMap = userDetails.stream()
+                .collect(Collectors.toMap(UserDetailDO::getUserId, detail -> detail));
+        
+        // 转换为DTO（手动设置字段以确保正确映射）
         List<UserListRespDTO> userListRespDTOs = userList.stream()
                 .map(user -> {
-                    UserListRespDTO dto = new UserListRespDTO();
-                    BeanUtils.copyProperties(user, dto);
-                    return dto;
+                    UserDetailDO detail = userDetailMap.get(user.getId());
+                    return new UserListRespDTO()
+                            .setUserId(user.getId())  // 手动设置userId
+                            .setUsername(user.getUsername())
+                            .setEmail(user.getEmail())
+                            .setPhone(user.getPhone())
+                            .setStatus(user.getStatus())
+                            .setCreatedAt(user.getCreatedAt())
+                            .setUpdatedAt(user.getUpdatedAt())
+                            .setAvatarUrl(detail != null ? detail.getAvatarUrl() : null);
                 })
                 .collect(Collectors.toList());
         
@@ -220,7 +255,6 @@ public class UserAdminServiceImpl implements UserAdminService {
         List<RolePermissionDO> rolePermissions = permissions.stream()
                 .map(permission -> {
                     RolePermissionDO rolePermission = new RolePermissionDO();
-                    rolePermission.setId(IdGeneratorManager.getIdGenerator(String.valueOf(USER_SERVICE_ID)).nextId());
                     rolePermission.setRoleId(role.getId());
                     rolePermission.setPermissionId(permission.getId());
                     rolePermission.setCreatedAt(new Date());

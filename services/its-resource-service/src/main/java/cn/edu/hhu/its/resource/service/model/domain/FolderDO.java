@@ -1,5 +1,6 @@
 package cn.edu.hhu.its.resource.service.model.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -15,9 +16,9 @@ import lombok.Data;
 @Data
 public class FolderDO implements Serializable {
     /**
-     * 主键ID
+     * 主键，使用PostgreSQL序列生成
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

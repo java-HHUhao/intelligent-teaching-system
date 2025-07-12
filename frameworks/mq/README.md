@@ -104,6 +104,7 @@ SendResult result = messageService.sendTransactionMessage("TX_TOPIC", "TX_TAG",
 
 ```java
 // 消费死信队列（主题名_DLQ）
+/**
 messageService.subscribe("TEST_TOPIC_DLQ", "*", "DLQ_GROUP", 
     (topic, tag, message, messageId) -> {
         log.error("处理死信消息: {}", message);

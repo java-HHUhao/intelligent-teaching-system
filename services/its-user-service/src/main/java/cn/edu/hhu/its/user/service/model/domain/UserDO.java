@@ -1,5 +1,6 @@
 package cn.edu.hhu.its.user.service.model.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -19,9 +20,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserDO implements Serializable {
     /**
-     * 主键，自增ID
+     * 主键，使用PostgreSQL序列生成
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

@@ -17,7 +17,6 @@ import cn.edu.hhu.its.user.service.service.UserLoginService;
 import cn.edu.hhu.its.user.service.util.JwtUtil;
 import cn.edu.hhu.spring.boot.starter.common.exception.ClientException;
 import cn.edu.hhu.spring.boot.starter.common.utils.ExceptionUtil;
-import cn.edu.hhu.spring.boot.starter.distributedid.handler.IdGeneratorManager;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.micrometer.common.util.StringUtils;
@@ -25,6 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +33,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cn.edu.hhu.its.user.service.common.contant.UserConstant.USER_SERVICE_ID;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -42,7 +40,7 @@ public class UserLoginServiceImpl implements UserLoginService {
     private final UserMapper userMapper;
     private final UserDetailMapper userDetailMapper;
     private final LoginLogMapper loginLogMapper;
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
 
     @Override
     public UserLoginRespDTO login(UserLoginReqDTO userLoginReqDTO) {
@@ -53,7 +51,6 @@ public class UserLoginServiceImpl implements UserLoginService {
         boolean isEmail = input.contains("@");
         boolean isPhone = input.matches("^\\d{11}$");
         boolean isUsername = !isEmail || !isPhone;
-
 
         // 数据库查找
         LambdaQueryWrapper<UserDO> queryWrapper = new LambdaQueryWrapper<>();
@@ -86,11 +83,10 @@ public class UserLoginServiceImpl implements UserLoginService {
 
         // 写入缓存（6小时）
         String tokenKey = UserCachePrefix.ACCESS_TOKEN + user.getId();
-        redisTemplate.opsForValue().set(tokenKey, token, Duration.ofHours(6));
+        stringRedisTemplate.opsForValue().set(tokenKey, token, Duration.ofHours(6));
 
         // 登录日志记录
         LoginLogDO log = new LoginLogDO();
-        log.setId(IdGeneratorManager.getDefaultServiceIdGenerator().nextId(USER_SERVICE_ID));
         log.setUserId(user.getId());
         log.setLoginTime(new Date());
         //TODO 传入用户IP
@@ -148,9 +144,9 @@ public class UserLoginServiceImpl implements UserLoginService {
         //获取tokenKey来删除token
         String userId = JwtUtil.getClaim(token,UserConstant.LOGIN_TOKEN_USER_ID);
         String tokenKey= UserCachePrefix.ACCESS_TOKEN +userId;
-        redisTemplate.delete(tokenKey);
+        stringRedisTemplate.delete(tokenKey);
         //删除权限缓存
         String permissionKey =UserCachePrefix.PERMISSIONS + userId;
-        redisTemplate.delete(permissionKey);
+        stringRedisTemplate.delete(permissionKey);
     }
 }

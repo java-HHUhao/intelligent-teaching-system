@@ -9,7 +9,7 @@ import cn.edu.hhu.its.user.service.model.dto.response.PermissionRespDTO;
 import cn.edu.hhu.its.user.service.model.dto.response.RoleRespDTO;
 import cn.edu.hhu.its.user.service.model.dto.response.UserListRespDTO;
 import cn.edu.hhu.spring.boot.starter.common.exception.ClientException;
-import cn.edu.hhu.spring.boot.starter.common.model.PageResult;
+import cn.edu.hhu.spring.boot.starter.common.page.PageResult;
 
 import java.util.List;
 

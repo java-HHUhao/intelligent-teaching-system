@@ -1,6 +1,6 @@
 package cn.edu.hhu.its.gateway.service.client;
 
-import cn.edu.hhu.its.gateway.service.model.dto.UserPermissionDTO;
+import cn.edu.hhu.spring.boot.starter.common.dto.UserPermissionDTO;
 import cn.edu.hhu.spring.boot.starter.common.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/auth")
+@RequestMapping("/user/login")
 @RequiredArgsConstructor
 @RefreshScope
 public class UserLoginController {
@@ -42,10 +42,5 @@ public class UserLoginController {
     public Result<Void> logout(HttpServletRequest request) {
         userLoginService.logout(request);
         return ResultUtil.success(null);
-    }
-
-    @GetMapping("/test")
-    public String test(){
-        return "test";
     }
 }

@@ -30,8 +30,8 @@ public class RocketMQProducerImpl implements MessageProducer, InitializingBean, 
 
     private DefaultMQProducer producer;
     private TransactionMQProducer transactionProducer;
-    private String nameServer;
-    private String producerGroup;
+    private final String nameServer;
+    private final String producerGroup;
 
     public RocketMQProducerImpl(String nameServer, String producerGroup) {
         this.nameServer = nameServer;

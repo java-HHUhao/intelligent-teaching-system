@@ -1,5 +1,6 @@
 package cn.edu.hhu.its.user.service.service.impl;
 
+import cn.edu.hhu.its.user.service.common.contant.UserConstant;
 import cn.edu.hhu.its.user.service.common.enums.UserErrorCode;
 import cn.edu.hhu.its.user.service.model.domain.UserDO;
 import cn.edu.hhu.its.user.service.model.domain.UserDetailDO;
@@ -202,8 +203,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         // 5. 生成新的token
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", userId);
-        claims.put("username", updateReq.getUsername());
+        claims.put(UserConstant.LOGIN_TOKEN_USER_ID, userId);
+        claims.put(UserConstant.LOGIN_TOKEN_USER_NAME, updateReq.getUsername());
         // 设置token过期时间为30天
         String newToken = JwtUtil.generateToken(claims, 30 * 24 * 60 * 60 * 1000L);
 

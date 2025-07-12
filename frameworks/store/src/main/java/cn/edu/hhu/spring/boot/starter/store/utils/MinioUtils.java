@@ -32,7 +32,7 @@ public class MinioUtils {
      * 上传文件到MinIO
      *
      * @param bucketName  存储桶名称
-     * @param objectName  对象名称
+     * @param objectName  minio中的路径
      * @param inputStream 文件输入流
      * @param contentType 文件类型
      * @throws Exception 上传异常
@@ -60,7 +60,7 @@ public class MinioUtils {
      * 获取文件访问URL
      *
      * @param bucketName 存储桶名称
-     * @param objectName 对象名称
+     * @param objectName minio中的路径
      * @return 文件访问URL
      * @throws Exception 获取URL异常
          */
@@ -71,6 +71,92 @@ public class MinioUtils {
                         .bucket(bucketName)
                         .object(objectName)
                         .method(Method.GET)
+                        .build()
+        );
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName minio中的路径
+     * @throws Exception 删除异常
+     */
+    public static void deleteFile(String bucketName, String objectName) throws Exception {
+        checkInit();
+        minioClient.removeObject(
+                RemoveObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .build()
+        );
+    }
+    
+    /**
+     * 复制文件
+     *
+     * @param sourceBucket   源存储桶
+     * @param sourceObject   源对象路径
+     * @param targetBucket   目标存储桶
+     * @param targetObject   目标对象路径
+     * @throws Exception 复制异常
+     */
+    public static void copyFile(String sourceBucket, String sourceObject, String targetBucket, String targetObject) throws Exception {
+        checkInit();
+        // 检查目标存储桶是否存在，不存在则创建
+        boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(targetBucket).build());
+        if (!found) {
+            minioClient.makeBucket(MakeBucketArgs.builder().bucket(targetBucket).build());
+        }
+        
+        minioClient.copyObject(
+                CopyObjectArgs.builder()
+                        .bucket(targetBucket)
+                        .object(targetObject)
+                        .source(CopySource.builder()
+                                .bucket(sourceBucket)
+                                .object(sourceObject)
+                                .build())
+                        .build()
+        );
+    }
+    
+    /**
+     * 检查文件是否存在
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 对象名称
+     * @return 文件是否存在
+     */
+    public static boolean fileExists(String bucketName, String objectName) {
+        try {
+            checkInit();
+            minioClient.statObject(
+                    StatObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .build()
+            );
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    /**
+     * 获取文件输入流
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 对象名称
+     * @return 文件输入流
+     * @throws Exception 获取异常
+     */
+    public static InputStream getFileStream(String bucketName, String objectName) throws Exception {
+        checkInit();
+        return minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
                         .build()
         );
     }

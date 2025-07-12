@@ -6,6 +6,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         ip: 127.0.0.1
+        heart-beat-interval: 3000
+        heart-beat-timeout: 9000
+        namespace: public
+        ephemeral: true
       config:
         server-addr: 127.0.0.1:8848
   config:
@@ -41,4 +45,13 @@ springdoc:
   group-configs:
   paths-to-match: '/**'
   packages-to-scan: cn.edu.hhu.its.user.service.controller
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
 

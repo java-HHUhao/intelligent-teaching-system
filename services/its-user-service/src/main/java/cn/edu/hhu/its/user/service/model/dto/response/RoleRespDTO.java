@@ -31,6 +31,11 @@ public class RoleRespDTO {
     private String description;
 
     /**
+     * 该角色拥有的用户数量
+     */
+    private Long userCount;
+
+    /**
      * 创建时间
      */
     private Date createdAt;

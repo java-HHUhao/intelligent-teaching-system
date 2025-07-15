@@ -2,7 +2,9 @@ package cn.edu.hhu.its.user.service.service;
 
 import cn.edu.hhu.its.user.service.model.dto.request.RoleCreateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.RolePermissionAssignReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.RoleUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.UserListReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.UserStatusUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionCreateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.response.PermissionRespDTO;
@@ -99,4 +101,22 @@ public interface UserAdminService {
      * @throws ClientException 如果父权限设置无效，抛出 PERMISSION_PARENT_ERROR 异常
      */
     PermissionRespDTO updatePermission(PermissionUpdateReqDTO updateReq);
+
+    /**
+     * 更新角色信息
+     *
+     * @param updateReq 更新角色请求参数
+     * @return 更新后的角色信息
+     * @throws ClientException 如果角色不存在，抛出 ROLE_NOT_FOUND 异常
+     * @throws ClientException 如果角色名称已存在，抛出 ROLE_NAME_EXIST_ERROR 异常
+     */
+    RoleRespDTO updateRole(RoleUpdateReqDTO updateReq);
+
+    /**
+     * 更新用户状态（启用/禁用）
+     *
+     * @param updateReq 更新请求
+     * @throws ClientException 用户不存在时抛出异常
+     */
+    void updateUserStatus(UserStatusUpdateReqDTO updateReq);
 }

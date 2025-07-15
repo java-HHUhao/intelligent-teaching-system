@@ -1,0 +1,6 @@
+server:
+  port: 8110
+spring:
+  ai:
+    zhipuai:
+      api-key: e2502f6186a84c7ebcf4ef432dec707e.YgfjqpHORIAk7DrV

@@ -1,8 +1,10 @@
 package cn.edu.hhu.its.user.service.controller;
 
 import cn.edu.hhu.its.user.service.model.dto.request.RoleCreateReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.RoleUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.RolePermissionAssignReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.UserListReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.UserStatusUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionCreateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.response.RoleRespDTO;
@@ -14,12 +16,17 @@ import cn.edu.hhu.spring.boot.starter.common.result.Result;
 import cn.edu.hhu.spring.boot.starter.common.utils.ResultUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 用户管理控制器
+ */
+@Slf4j
 @RestController
 @RequestMapping("/user/admin")
 @RequiredArgsConstructor
@@ -86,6 +93,14 @@ public class UserAdminController {
     }
 
     /**
+     * 更新角色信息
+     */
+    @PutMapping("/roles")
+    public Result<RoleRespDTO> updateRole(@Validated @RequestBody RoleUpdateReqDTO updateReq) {
+        return ResultUtil.success(userAdminService.updateRole(updateReq));
+    }
+
+    /**
      * 获取所有权限列表（树形结构）
      */
     @GetMapping("/permissions")
@@ -116,5 +131,14 @@ public class UserAdminController {
     public Result<Void> deletePermission(@PathVariable("permissionCode") String permissionCode) {
         userAdminService.deletePermissionByCode(permissionCode);
         return ResultUtil.success(null);
+    }
+
+    /**
+     * 更新用户状态（启用/禁用）
+     */
+    @PutMapping("/status")
+    public Result<Void> updateUserStatus(@Validated @RequestBody UserStatusUpdateReqDTO updateReq) {
+        userAdminService.updateUserStatus(updateReq);
+        return ResultUtil.success();
     }
 }

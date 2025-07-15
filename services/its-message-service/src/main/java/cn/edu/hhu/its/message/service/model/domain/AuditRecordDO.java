@@ -1,9 +1,11 @@
 package cn.edu.hhu.its.message.service.model.domain;
 
+import cn.edu.hhu.its.message.service.handler.StringToJsonbTypeHandler;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -59,6 +61,7 @@ public class AuditRecordDO implements Serializable {
     /**
      * 审核相关数据，JSON格式
      */
+    @TableField(value = "audit_data", jdbcType = JdbcType.OTHER, typeHandler = StringToJsonbTypeHandler.class)
     private String auditData;
 
     /**

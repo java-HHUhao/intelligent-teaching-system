@@ -89,5 +89,20 @@
     </dependencies>
 
     <artifactId>its-message-service</artifactId>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- 版本可以略有不同 -->
+                <configuration>
+                    <source>17</source> <!-- 根据你项目的 Java 版本 -->
+                    <target>17</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

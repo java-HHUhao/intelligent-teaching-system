@@ -18,15 +18,15 @@ public class ThreadPoolMonitorScheduler {
     }
 
     private void startMonitor() {
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            threadPoolManager.poolNames().forEach(name -> {
-                ThreadPoolExecutor executor = threadPoolManager.get(name);
-                log.info("[线程池监控] name={} active={} queue={} completed={}",
-                        name,
-                        executor.getActiveCount(),
-                        executor.getQueue().size(),
-                        executor.getCompletedTaskCount());
-            });
-        }, 10, 30, TimeUnit.SECONDS);
+//        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+//            threadPoolManager.poolNames().forEach(name -> {
+//                ThreadPoolExecutor executor = threadPoolManager.get(name);
+//                log.info("[线程池监控] name={} active={} queue={} completed={}",
+//                        name,
+//                        executor.getActiveCount(),
+//                        executor.getQueue().size(),
+//                        executor.getCompletedTaskCount());
+//            });
+//        }, 10, 30, TimeUnit.SECONDS);
     }
 }

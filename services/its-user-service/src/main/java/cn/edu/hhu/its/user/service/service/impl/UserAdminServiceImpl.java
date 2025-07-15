@@ -6,8 +6,11 @@ import cn.edu.hhu.its.user.service.model.domain.UserDO;
 import cn.edu.hhu.its.user.service.model.domain.UserDetailDO;
 import cn.edu.hhu.its.user.service.model.domain.RolePermissionDO;
 import cn.edu.hhu.its.user.service.model.domain.PermissionDO;
+import cn.edu.hhu.its.user.service.model.domain.UserRoleDO;
 import cn.edu.hhu.its.user.service.model.dto.request.RoleCreateReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.RoleUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.UserListReqDTO;
+import cn.edu.hhu.its.user.service.model.dto.request.UserStatusUpdateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.RolePermissionAssignReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionCreateReqDTO;
 import cn.edu.hhu.its.user.service.model.dto.request.PermissionUpdateReqDTO;
@@ -19,6 +22,7 @@ import cn.edu.hhu.its.user.service.model.mapper.UserDetailMapper;
 import cn.edu.hhu.its.user.service.model.mapper.UserMapper;
 import cn.edu.hhu.its.user.service.model.mapper.RolePermissionMapper;
 import cn.edu.hhu.its.user.service.model.mapper.PermissionMapper;
+import cn.edu.hhu.its.user.service.model.mapper.UserRoleMapper;
 import cn.edu.hhu.its.user.service.service.UserAdminService;
 import cn.edu.hhu.spring.boot.starter.common.exception.ClientException;
 import cn.edu.hhu.spring.boot.starter.common.page.PageResult;
@@ -38,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.HashMap;
 
 import static cn.edu.hhu.its.user.service.common.contant.UserConstant.USER_SERVICE_ID;
 
@@ -50,6 +55,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     private final RoleMapper roleMapper;
     private final PermissionMapper permissionMapper;
     private final RolePermissionMapper rolePermissionMapper;
+    private final UserRoleMapper userRoleMapper;
 
     @Override
     public PageResult<UserListRespDTO> getUserList() {
@@ -179,18 +185,39 @@ public class UserAdminServiceImpl implements UserAdminService {
 
     @Override
     public List<RoleRespDTO> listRoles() {
-        // 查询所有角色，按创建时间降序排序
+        // 1. 查询所有角色，按创建时间降序排序
         List<RoleDO> roles = roleMapper.selectList(
                 new LambdaQueryWrapper<RoleDO>()
                         .orderByDesc(RoleDO::getCreatedAt)
         );
 
-        // 转换为响应对象
+        if (roles.isEmpty()) {
+            return List.of();
+        }
+
+        // 2. 获取角色ID列表
+        List<Long> roleIds = roles.stream()
+                .map(RoleDO::getId)
+                .collect(Collectors.toList());
+
+        // 3. 统计每个角色的用户数量（使用单条SQL查询）
+        Map<Long, Long> roleUserCountMap = userRoleMapper.selectList(
+                new LambdaQueryWrapper<UserRoleDO>()
+                        .in(UserRoleDO::getRoleId, roleIds)
+        ).stream().collect(
+                Collectors.groupingBy(
+                        UserRoleDO::getRoleId,
+                        Collectors.counting()
+                )
+        );
+
+        // 4. 转换为响应对象，并设置用户数量
         return roles.stream()
                 .map(role -> new RoleRespDTO()
                         .setId(role.getId())
                         .setName(role.getName())
                         .setDescription(role.getDescription())
+                        .setUserCount(roleUserCountMap.getOrDefault(role.getId(), 0L))
                         .setCreatedAt(role.getCreatedAt())
                         .setUpdatedAt(role.getUpdatedAt()))
                 .collect(Collectors.toList());
@@ -530,6 +557,56 @@ public class UserAdminServiceImpl implements UserAdminService {
                 .setCreatedAt(permission.getCreatedAt())
                 .setUpdatedAt(permission.getUpdatedAt())
                 .setChildren(new ArrayList<>());
+    }
+
+    @Override
+    @Transactional
+    public RoleRespDTO updateRole(RoleUpdateReqDTO updateReq) {
+        // 1. 验证角色是否存在
+        RoleDO role = roleMapper.selectById(updateReq.getId());
+        ExceptionUtil.throwIf(role == null,
+                () -> new ClientException(UserErrorCode.ROLE_NOT_FOUND));
+
+        // 2. 检查角色名称是否与其他角色重复
+        Long count = roleMapper.selectCount(
+                new LambdaQueryWrapper<RoleDO>()
+                        .eq(RoleDO::getName, updateReq.getName())
+                        .ne(RoleDO::getId, updateReq.getId())
+        );
+        ExceptionUtil.throwIf(count > 0,
+                () -> new ClientException(UserErrorCode.ROLE_NAME_EXIST_ERROR));
+
+        // 3. 更新角色信息
+        RoleDO updateRole = new RoleDO()
+                .setId(updateReq.getId())
+                .setName(updateReq.getName())
+                .setDescription(updateReq.getDescription())
+                .setUpdatedAt(new Date());
+
+        roleMapper.updateById(updateRole);
+
+        // 4. 返回更新后的角色信息
+        return new RoleRespDTO()
+                .setId(updateRole.getId())
+                .setName(updateRole.getName())
+                .setDescription(updateRole.getDescription())
+                .setCreatedAt(role.getCreatedAt())
+                .setUpdatedAt(updateRole.getUpdatedAt());
+    }
+
+    @Override
+    @Transactional
+    public void updateUserStatus(UserStatusUpdateReqDTO updateReq) {
+        // 1. 检查用户是否存在
+        UserDO user = userMapper.selectById(updateReq.getUserId());
+        ExceptionUtil.throwIf(user == null || Boolean.TRUE.equals(user.getIsDeleted()),
+                () -> new ClientException(UserErrorCode.USER_NOT_EXIST));
+
+        // 2. 更新用户状态
+        user.setStatus(updateReq.getStatus())
+            .setUpdatedAt(new Date());
+        
+        userMapper.updateById(user);
     }
 
     /**

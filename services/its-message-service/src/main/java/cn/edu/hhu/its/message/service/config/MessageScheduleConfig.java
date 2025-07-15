@@ -1,11 +1,8 @@
 package cn.edu.hhu.its.message.service.config;
 
-import cn.edu.hhu.its.message.service.service.AuditService;
 import cn.edu.hhu.its.message.service.service.SiteMessageService;
-import cn.edu.hhu.its.message.service.service.VerificationCodeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -28,18 +25,18 @@ public class MessageScheduleConfig {
     /**
      * 清理过期消息 - 每天凌晨2点执行
      */
-    @Scheduled(cron = "0 0 2 * * ?")
-    public void cleanExpiredMessages() {
-        try {
-            log.info("开始清理过期消息...");
-            var result = siteMessageService.cleanExpiredMessages();
-            if (result.getData() != null) {
-                log.info("清理过期消息完成，共清理{}条消息", result.getData());
-            }
-        } catch (Exception e) {
-            log.error("清理过期消息失败", e);
-        }
-    }
+//    @Scheduled(cron = "0 0 2 * * ?")
+//    public void cleanExpiredMessages() {
+//        try {
+//            log.info("开始清理过期消息...");
+//            var result = siteMessageService.cleanExpiredMessages();
+//            if (result.getData() != null) {
+//                log.info("清理过期消息完成，共清理{}条消息", result.getData());
+//            }
+//        } catch (Exception e) {
+//            log.error("清理过期消息失败", e);
+//        }
+//    }
 
     /**
      * 清理过期验证码 - 每小时执行一次

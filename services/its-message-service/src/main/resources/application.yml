@@ -42,7 +42,8 @@ springdoc:
   paths-to-match: '/**'
   packages-to-scan: cn.edu.hhu.its.message.service.controller
 
-
+mybatis-plus:
+  type-handlers-package: cn.edu.hhu.its.message.service.handler.StringToJsonbTypeHandler
 ## 自定义配置
 its:
   # 线程池配置
